@@ -1,0 +1,181 @@
+//game    POST (creates game)
+/** req:
+ * {    
+ *      roomid: 'ROOM1',
+ * }
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      roomid: 'ROOM1',      
+ *      createdAt: '12/2/2016',
+ * }
+ */
+ 
+//game/GAM1 GET (returns game and statistics)
+/**
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      room: 'MORDOR',
+ *      player1: '',
+ *      player2: '',
+ *      currentTurn: '',
+ *      winner: '',
+ *      createdAt: '12/2/2016',
+ * }
+ */
+ 
+//game/GAM1/players POST (adds a new player)
+/**
+ * req:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ * }
+ *  
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      room: 'MORDOR',
+ *      player1: 'PABLO',
+ *      player2: '',
+ *      currentTurn: 'PABLO',
+ *      winner: '',
+ *      createdAt: '12/2/2016',
+ * }
+ */
+ 
+//game/GAM1/players GET (returns players list)
+/** 
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      player1: 'PABLO',
+ *      player2: ''
+ * }
+ */
+ 
+//game/GAM1/players/PL1/board POST (configures the board)
+/**
+ * req:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      ships: [
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } },
+ *          { coordenates: { x: 0, y: 1 } }
+ *      ]
+ * }
+ *  
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      ships: [
+ *          { id: 'SP1',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP2',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP3',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP4',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP5',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP6',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP7',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP8',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP9',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP10', type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } }
+ *      ]
+ * }
+ */
+ 
+//game/GAM1/players/PL1/board GET (returns the board, destroyed ships not listed)
+/**
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      ships: [
+ *          { id: 'SP1',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP3',  type: 'crusier', life: 1, coordenates: { x: 0, y: 1 } },
+            { id: 'SP4',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP6',  type: 'crusier', life: 1, coordenates: { x: 0, y: 1 } },
+            { id: 'SP7',  type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } },
+            { id: 'SP9',  type: 'crusier', life: 1, coordenates: { x: 0, y: 1 } },
+            { id: 'SP10', type: 'crusier', life: 2, coordenates: { x: 0, y: 1 } }
+ *      ]
+ * }
+ */
+ 
+//game/GAM1/players/PL1/attack POST (attacks the enemy)
+/**
+ * req:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      coordinates: { x: 1, y: 3 }
+ * }
+ *  
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      result: {
+ *          status: 'failed, it is SANDY's turn.';
+ *      }
+ * }
+ * 
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      result: {
+ *          status: 'hit, you have another shot.';
+ *      }
+ * }
+ */
+
+//game/GAM1/log GET (returns the game log)
+/**
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      history: [
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Sandy', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' }        
+ *      ]
+ * }
+ */
+
+//game/GAM1/players/PL1/log GET (returns the players game log)
+/**
+ * res:
+ * {
+ *      gameId: 'GAM1',
+ *      playerId: 'PL1',
+ *      history: [
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'hit' },
+ *          { player: 'Pablo', date: '12/12/2016', coordinates: { x: 0, y: 1 }, result: 'failed' }        
+ *      ]
+ * }
+ */
